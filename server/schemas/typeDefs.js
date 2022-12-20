@@ -17,9 +17,17 @@ const typeDefs = gql`
         password: String
     }
 
+    type Message {
+        _id: ID
+        message: String!
+        date: String
+    }
+
     type Auth {
         token: ID!
         user: User
     }
 
-`
+`;
+
+module.exports = typeDefs;
