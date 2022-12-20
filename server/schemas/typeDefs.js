@@ -18,7 +18,9 @@ const typeDefs = gql`
     }
 
     type Message {
-        
+        _id: ID
+        message: String!
+        date: String
     }
 
     type Auth {
