@@ -19,7 +19,7 @@ export default function Forms() {
                             type="password"
                             />
                             <br></br>
-                            <button type="button">Login</button>  
+                            <button type="button" className='submitbuttons'>Login</button>  
                             </form>
                     </div>
                     <div className="signup">
@@ -45,7 +45,7 @@ export default function Forms() {
                             type="email"
                             />
                             <br></br>
-                            <button type="button">Login</button>  
+                            <button type="button" className='submitbuttons'>Login</button>  
                         </form>
                     </div>
             </div>
