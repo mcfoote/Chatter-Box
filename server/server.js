@@ -13,10 +13,13 @@ const app = express();
 app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
+// stores the server and options to 'server' variable
 const server = new ApolloServer({
     typeDefs,
     resolvers,
+    context: authMiddleware,
 });
+
 
 //serve homepage
 app.get('/', (req, res) => {
