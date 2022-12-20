@@ -22,11 +22,12 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(_dirname, '../client/src/index.html'));
 })
 
+/*
 db.once('open', () => {
     app.listen(PORT, () => console.log(`... Listening on port: ${PORT} `));
 });
+*/
 
-/*  moving towards this
 const startApolloServer = async (typeDefs, resolvers) => {
 
     await server.start();
@@ -40,5 +41,5 @@ const startApolloServer = async (typeDefs, resolvers) => {
 
 startApolloServer(typeDefs, resolvers);
 
-*/
+
 

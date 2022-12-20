@@ -18,7 +18,8 @@ const typeDefs = gql`
     }
 
     type Message {
-        
+        message: String
+        date: Date
     }
 
     type Auth {
