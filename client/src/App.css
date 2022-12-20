@@ -1,0 +1,41 @@
+/*Login/sign up page*/
+.loginsignup {
+    text-align: center;
+}
+.login {
+    padding: 25px;
+    border-radius: 5px;
+    border-color: black;
+    border-style: solid;
+    display: inline-block;
+    min-width: 45vh;
+  }
+  
+.signup {
+    padding: 25px;
+    border-radius: 5px;
+    border-color: black;
+    border-style: solid;
+    display: inline-block;
+    min-width: 45vh;
+  }
+
+/*Account settings page*/
+.settingspage {
+
+}
+
+.settingsbox {
+    padding: 25px;
+    border-radius: 5px;
+    border-color: black;
+    border-style: solid;
+    display: inline-block;
+    min-width: 45vh;
+}
+
+.submitbuttons {
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
