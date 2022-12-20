@@ -1,6 +1,7 @@
 const express = require('express');
 const path = require('path');
 const { ApolloServer } = require('apollo-server-express');
+const {typeDefs, resolvers} = require('./schemas');
 
 const db = require('./config/connection.js');
 
@@ -12,7 +13,8 @@ app.use(express.urlencoded({extended: true}));
 app.use(express.json());
 
 const server = new ApolloServer({
-    //todo link schemas
+    typeDefs,
+    resolvers,
 });
 
 //serve homepage
@@ -23,3 +25,20 @@ app.get('/', (req, res) => {
 db.once('open', () => {
     app.listen(PORT, () => console.log(`... Listening on port: ${PORT} `));
 });
+
+/*  moving towards this
+const startApolloServer = async (typeDefs, resolvers) => {
+
+    await server.start();
+    server.applyMiddleware({app});
+
+    db.once('open', () => {
+        app.listen(PORT, () => console.log(`... Listening on port: ${PORT} `));
+    });
+
+}
+
+startApolloServer(typeDefs, resolvers);
+
+*/
+
