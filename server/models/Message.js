@@ -4,6 +4,7 @@ const messageSchema = new Schema({
     message: {
         type: String,
         required: true,
+        maxLength: 500,
     },
     createdAt: {
         timestamps: true,
