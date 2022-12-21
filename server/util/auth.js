@@ -28,4 +28,4 @@ module.exports = {
     signToken: function ({ email, _id }) {
         return jwt.sign({ data: { email, _id } }, secret, { expiresIn: expiration });
     }
-}
+};
