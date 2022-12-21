@@ -26,4 +26,6 @@ const userSchema = new Schema({
 
 //todo user authentication
 
-const User = model('User', userSchema)
+const User = model('User', userSchema);
+
+module.exports = User;
