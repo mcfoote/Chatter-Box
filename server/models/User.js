@@ -18,9 +18,9 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    messages: {
-        
-    }
+    messages: [
+        mongoose.Schema.Types.ObjectId
+    ]
     
 });
 

@@ -5,10 +5,15 @@ const messageSchema = new Schema({
         type: String,
         required: true,
     },
-    date: { 
-        type: Date, 
-        default: Date.now 
+    createdAt: {
+        timestamps: true,
+        type: Date,
+        default: Date.now,
     },
+    userId: {
+        type: Schema.Types.ObjectId,
+        required: true
+    }
 });
 
 const Message = model('Message', messageSchema);
