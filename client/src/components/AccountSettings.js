@@ -11,21 +11,25 @@ export default function AccountSettings() {
                     <input
                     name="firstname"
                     type="text"
+                    className="inputbox"
                     />
                     <p>Edit last name:</p>
                     <input 
                     name="lastname"
                     type="text"
+                    className="inputbox"
                     />
                     <p> Edit Email:</p>
                     <input 
                     name="email"
                     type="email"
+                    className="inputbox"
                     />
                     <p>Change Password</p>
                     <input 
                     name="password" 
                     type="password"
+                    className="inputbox"
                     />
                     <br></br>
                     <button type="button" className='submitbuttons'>Confirm changes</button>  
