@@ -1,5 +1,6 @@
 import React from 'react';
 import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
+import Forms from './components/CreateAccountForm';
 
 const client = new ApolloClient({
 
