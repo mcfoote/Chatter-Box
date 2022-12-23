@@ -7,14 +7,15 @@ const typeDefs = gql`
         user(userId: ID!): User
         // when we query 'users', we return all the users
         users: [User]!
+        // DO MESSAGES
         message()
         messages
 
     }
 
     type Mutation {
-        createUser(name: String!, email: String!, password: String!)
-        createMessage(userId: ID, message: String): User
+        createUser(name: String!, email: String!, password: String!): Auth
+        createMessage(userId: ID, message: String): Auth
         login(email: String!, password: String!): Auth
         // as resolvers are implemented, uncomment accordingly but leave commented out to not break querying
         // updateName
