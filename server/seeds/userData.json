@@ -1,7 +1,29 @@
 [
     {
-       "username": "testname",
-       "email": "testmail@testmail.com",
-       "password": "testpass"
+        "_id": 1,
+       "username": "testnameone",
+       "email": "testmail1@testmail.com",
+       "password": "testpass123",
+       "messages": 1
+    },
+    {
+        "_id": 2,
+       "username": "testnametwo",
+       "email": "testmail2@testmail.com",
+       "password": "testpass321",
+       "messages": 2
+    },
+    {
+        "_id": 3,
+       "username": "testnamethree",
+       "email": "testmail3@testmail.com",
+       "password": "testpass456",
+       "messages": 3
+    },
+    {
+        "_id": 4,
+       "username": "testnamefour",
+       "email": "testmail4@testmail.com",
+       "password": "testpass654"
     }
 ]
