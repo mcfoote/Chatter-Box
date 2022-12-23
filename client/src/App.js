@@ -1,6 +1,9 @@
 import React from 'react';
 import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
 import Forms from './components/CreateAccountForm';
+import signup from './components/Signup';
+import Login from './components/Login';
+import AccountSettings from './components/AccountSettings';
 
 const client = new ApolloClient({
 
@@ -11,6 +14,7 @@ const client = new ApolloClient({
 
 function App() {
 
+    //todo implement components
     return(
         <ApolloProvider client = {client}>
             <Routes>
