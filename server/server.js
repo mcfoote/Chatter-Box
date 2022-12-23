@@ -20,8 +20,13 @@ const server = new ApolloServer({
     context: authMiddleware,
 });
 
+//not needed yet
+if(process.env.NODE_ENV === 'production') {
+    app.use(express.static(path.join(__dirname, '../client/public')));
+}
 
-//serve homepage
+//serve homepage 
+//todo plugin correct home page
 app.get('/', (req, res) => {
     res.sendFile(path.join(_dirname, '../client/src/index.html'));
 })
