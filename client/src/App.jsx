@@ -1,9 +1,11 @@
 import React from 'react';
-import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Forms from './components/CreateAccountForm';
 import signup from './components/Signup';
 import Login from './components/Login';
 import AccountSettings from './components/AccountSettings';
+
 
 const client = new ApolloClient({
 
@@ -15,11 +17,13 @@ const client = new ApolloClient({
 function App() {
 
     //todo implement components
-    return(
-        <ApolloProvider client = {client}>
-            <Routes>
-                <Route path="/" element={<Home/>} />
-            </Routes>
+    return (
+        <ApolloProvider client={client}>
+            <BrowserRouter>
+                <Routes>
+                    <Route path="/" element={<Login />} />
+                </Routes>
+            </BrowserRouter>
         </ApolloProvider>
     )
 
