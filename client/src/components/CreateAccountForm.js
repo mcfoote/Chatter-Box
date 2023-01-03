@@ -3,7 +3,7 @@ import Login from "./Login";
 import Signup from "./Signup";
 
 import { Container, Tabs, Tab } from "react-bootstrap";
-import "bootstrap/dist/css/bootstrap.min.css";
+// import "bootstrap/dist/css/bootstrap.min.css";
 
 export default function Forms() {
   return (

@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 
-mongoose.connect( 'target', {
+mongoose.connect( 'mongodb://127.0.0.1:27017/social-project3', {
     useUnifiedTopology: true,
     useNewUrlParser: true,
 });
