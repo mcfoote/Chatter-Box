@@ -1,4 +1,4 @@
-const { signToken } = require('../util/auth');
+const { signToken } = require('../utils/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Message } = require('../models');
 
@@ -20,50 +20,35 @@ const resolvers = {
         // query all messages from a user
         messages: async () => {
             return Message.find({});
-        },
-        // query signed on user baed on the middleware context passed to the server
-        me: async (parent, args, context) => {
-            if (context.user) {
-                return User.findOne({ _id: context.user._id });
-            }
-            throw new AuthenticationError('You need to be logged in!');
-        },
+        }
     },
 
     Mutation: {
         createUser: async (parent, { name, email, password }) => {
-            const user = await User.create({ name, email, password });
-            const token = signToken(user);
-            return { token, user };
+            const user = await User.create(args);
+            return user;
         },
         createMessage: async (parent, args, context) => {
-            // If context has a `user` property, that means the user executing this mutation has a valid JWT and is logged in
             if (context.user) {
                 const message = await Message.create(args);
-                // returns the message as well as the user that created it
-                return { message, user };
+                return message;
             }
 
         },
         login: async (parent, { email, password }) => {
-            // we find a single user based on the email object and assign taht to 'user' variable
-            const user = await User.findOne({ email, password });
+            const user = await User.findOne({ email });
 
-            // if theres no user with matching email, we let the user know
             if (!user) {
                 throw new AuthenticationError('No user with this email found!');
             }
 
-            // we use the virtual method defined in the user schema to check the password entered with the hashed password in the database
             const validPw = await profile.isCorrectPassword(password);
 
-            // if the passwords dont match we throw an error
             if (!validPw) {
                 throw new AuthenticationError('Incorrect password, try again.');
             }
 
             const token = signToken(user);
-            // we return the signed token as well as the user that signed the token
             return { token, user };
         },
         // will uncomment as functionality expands but will cause problems if left active

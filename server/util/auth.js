@@ -11,7 +11,6 @@ module.exports = {
         // pop removes the last index and trim will delete the space if there is any after removing the last index
         if (req.headers.authorization) {
             token = token.split(' ').pop().trim();
-            console.log(token);
         }
         // if the token is expired/nonexistent, we will return the request
         if (!token) {
@@ -21,7 +20,6 @@ module.exports = {
         try {
             const { data } = jwt.verify(token, secret, { maxAge: expiration });
             req.user = data;
-            console.log({ data })
         } catch {
             console.log('Invalid token');
         }
