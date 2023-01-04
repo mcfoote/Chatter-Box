@@ -1,15 +1,6 @@
 {
-  "scripts": {
-    "start": "node server.js",
-    "watch": "nodemon",
-    "seed": "node seeds/seed.js",
-    "develop": "concurrently \"cd server && npm run start\" \"cd client && npm start\"",
-    "install": "cd server && npm i && cd ../client && npm i"
-  },
   "dependencies": {
     "apollo-server-express": "^3.11.1",
-    "express": "^4.18.2",
-    "jsonwebtoken": "^9.0.0",
-    "mongoose": "^6.8.2"
+    "express": "^4.18.2"
   }
 }

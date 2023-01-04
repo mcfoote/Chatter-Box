@@ -1,21 +1,19 @@
 :root {
   --dark: #595959;
-  --light: #AFBFC4
+  --light: #afbfc4;
 }
-
-.App {
-  text-align: center;
-  font-family: Andale Mono, monospace;
-}
-
 /*Login/sign up page*/
+
 .loginsignuppage {
-  background: rgb(2,0,36);
-  background: radial-gradient(circle, rgba(2,0,36,1) 9%, rgba(63,62,107,1) 35%, rgba(139,215,214,1) 97%);
+  background-color: var(--dark);
   min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+
+.loginsignup {
+  text-align: center;
 }
 
 .login {
@@ -23,10 +21,9 @@
   border-radius: 5px;
   border-color: black;
   border-style: solid;
-  /* border-style: solid;
-  border-color: black; */
   display: inline-block;
   min-width: 45vh;
+  display: inline-block;
   background-color: var(--light);
 }
 
@@ -35,30 +32,14 @@
   border-radius: 5px;
   border-color: black;
   border-style: solid;
-  /* border-style: solid;
-  border-color: black; */
   display: inline-block;
   min-width: 45vh;
+  display: inline-block;
   background-color: var(--light);
 }
 
-.inputbox {
-  border-radius: 10px;
-  border-style: solid;
-  border-color: var(--dark);
-}
-
 /*Account settings page*/
-.settings {
-  background: rgb(2,0,36);
-  background: radial-gradient(circle, rgba(2,0,36,1) 9%, rgba(63,62,107,1) 35%, rgba(139,215,214,1) 97%);
-  min-height: 100vh;
-}
-
-.settingspagemain {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
+.settingspage {
 }
 
 .settingsbox {
@@ -68,25 +49,10 @@
   border-style: solid;
   display: inline-block;
   min-width: 45vh;
-  background-color: var(--light);
-}
-
-.settingsnavbar {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  background-color: inherit;
-}
-
-.settingsnavbarul {
-  list-style-type: none;
 }
 
 .submitbuttons {
-  margin-top: 20px;
-  padding-top: 10px;
-  padding-bottom: 10px;
-  border-radius: 10px;
-  padding-left: 10px;
-  padding-right: 10px;
+  margin-top: 10px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }

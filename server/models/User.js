@@ -1,47 +1,33 @@
-//local requirements
-const {Schema, model} = require('mongoose');
+const mongoose = require('mongoose')
+const bcrypt = require("bcrypt");
 
-const userSchema = new Schema({
-    //todo define schema
-    username: {
-        type: String,
-        required: true,
-        unique: true
+//simple user model
+const userSchema = mongoose.Schema(
+    {
+      name: { type: "String", required: true },
+      email: { type: "String", unique: true, required: true },
+      password: { type: "String", required: true },
+      
     },
-    email: {
-        type: String,
-        required: true,
-        unique: true,
-        match: [/.+@.+\..+/, 'User must enter a valid email address.']
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    // messages: [
-    //     Mongoose.Schema.Types.ObjectId
-    // ]
-    
-});
+    { timestaps: true }
+  );
 
-//todo user authentication
-// set up pre-save middleware to create password
-userSchema.pre('save', async function (next) {
-    if (this.isNew || this.isModified('password')) {
-      const saltRounds = 10;
-      this.password = await bcrypt.hash(this.password, saltRounds);
-    }
-  
-    next();
-  });
-  
-  // compare the incoming password with the hashed password
-  userSchema.methods.isCorrectPassword = async function (password) {
-    return bcrypt.compare(password, this.password);
+
+  userSchema.methods.matchPassword = async function (enteredPassword) {
+    //this will check our password on a login to passwords in the db
+    return await bcrypt.compare(enteredPassword, this.password);
   };
+  
+  //Checks to see if the code has been changed before sending it to the next bit
+  userSchema.pre("save", async function (next) {
+    if (!this.isModified) {
+      next();
+    }
+    //will salt and encrypt the password
+    const salt = await bcrypt.genSalt(10);
+    this.password = await bcrypt.hash(this.password, salt);
+  });
 
-
-
-const User = model('User', userSchema);
+const User = mongoose.model("User", userSchema)
 
 module.exports = User;
