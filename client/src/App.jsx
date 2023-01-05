@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Forms from './components/CreateAccountForm';
 import signup from './components/Signup';
 import Login from './components/Login';
+import Homepage from './Pages/Homepage';
 import AccountSettings from './components/AccountSettings';
 
 
@@ -22,11 +23,14 @@ function App() {
             <BrowserRouter>
                 <Routes>
                     <Route path="/" element={<Login />} />
+                    <Route path="/homepage" element={<Homepage />} />
                 </Routes>
             </BrowserRouter>
         </ApolloProvider>
     )
-
 }
 
 export default App;
+
+
+
