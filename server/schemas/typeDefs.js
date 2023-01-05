@@ -7,7 +7,6 @@ const typeDefs = gql`
         users: [User]!
         message(messageId: ID!): Message
         messages: [Message]!
-
     }
 
     type Mutation {
