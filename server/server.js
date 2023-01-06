@@ -14,7 +14,7 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/api/user',userRoutes)
+
 
 // stores the server and options to 'server' variable
 const server = new ApolloServer({
