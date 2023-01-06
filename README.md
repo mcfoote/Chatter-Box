@@ -1,4 +1,4 @@
-# ChatterBox 500
+# Chatter-Box 500
 //Link to screenshot ![image]
 
 ## Description
