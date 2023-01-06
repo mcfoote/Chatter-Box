@@ -3,7 +3,6 @@ const path = require('path');
 const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./util/auth');
-const userRoutes = require("./routes/userRoutes")
 
 const db = require('./config/connection.js');
 
@@ -29,7 +28,7 @@ app.get('/', (req, res) => {
     res.sendFile(path.join(_dirname, '../client/src/index.html'));
 })
 
-
+//function to start server
 const startApolloServer = async (typeDefs, resolvers) => {
 
     await server.start();
@@ -41,7 +40,5 @@ const startApolloServer = async (typeDefs, resolvers) => {
 
 }
 
+//call function to start server
 startApolloServer(typeDefs, resolvers);
-
-
-
