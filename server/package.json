@@ -1,4 +1,9 @@
 {
+  "scripts": {
+    "start": "node server.js",
+    "watch": "nodemon",
+    "seed": "node seeds/seed.js"
+  },
   "dependencies": {
     "apollo-server-express": "^3.11.1",
     "bcrypt": "^5.1.0",

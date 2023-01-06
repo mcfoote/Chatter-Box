@@ -4,7 +4,6 @@ const typeDefs = gql`
 
     type Query {
         user(userId: ID!): User
-        
         users: [User]!
         message(messageId: ID!): Message
         messages: [Message]!
@@ -16,6 +15,7 @@ const typeDefs = gql`
         createMessage(userId: ID, message: String): User
         login(email: String!, password: String!): Auth
         
+
     }
 
     type User {

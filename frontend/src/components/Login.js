@@ -1,5 +1,4 @@
 import React from "react";
-import Auth from '../util/auth';
 import { useMutation } from '@apollo/client';
 import { LOGIN_USER } from '../util/mutations'
 

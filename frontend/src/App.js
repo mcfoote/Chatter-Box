@@ -1,9 +1,9 @@
 import React from 'react';
 import {ApolloClient, ApolloProvider, InMemoryCache} from '@apollo/client';
-import {  Route } from "react-router-dom";
+import { Route } from "react-router-dom"
+import Homepage from './Pages/Homepage';
 import MessengerPage from './Pages/MessengerPage';
 import "./App.css";
-import Homepage from './Pages/Homepage';
 
 const client = new ApolloClient({
 
@@ -14,16 +14,14 @@ const client = new ApolloClient({
 
 function App() {
 
-    return(<div className="App">
-        
+    return(
         <ApolloProvider client = {client}>
-            <Route path="/" component={Homepage} exact/>
-            <Route path="/chats" component={MessengerPage} exact/> 
+            <Routes>
+                <Route path="/" element={<Home/>} />
+                <Route path="/" component={Homepage} exact/>
+                <Route path="/chats" component={MessengerPage} exact/>
+            </Routes>
         </ApolloProvider>
-        
-        </div>
     )
-    
-}
 
-export default App;
+}
