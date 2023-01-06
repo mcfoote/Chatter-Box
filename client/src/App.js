@@ -14,14 +14,16 @@ const client = new ApolloClient({
 
 function App() {
 
-    return(
+    return(<div className="App">
         <ApolloProvider client = {client}>
-            <Routes>
-                <Route path="/" element={<Home/>} />
+            
+                
                 <Route path="/" component={Homepage} exact/>
                 <Route path="/chats" component={MessengerPage} exact/>
-            </Routes>
+            
         </ApolloProvider>
+        </div>
     )
 
 }
+export default App;
