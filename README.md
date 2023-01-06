@@ -1,4 +1,4 @@
-# Real-Time-Chat-App
+# ChatterBox 500
 //Link to screenshot ![image]
 
 ## Description
