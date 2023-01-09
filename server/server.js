@@ -7,9 +7,7 @@ const path = require("path");
 dotenv.config();
 DB();
 const app = express();
-
 app.use(express.json());
-
 app.use(routes);
 
  const __dirname1 = path.resolve();
