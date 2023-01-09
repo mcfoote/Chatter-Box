@@ -7,7 +7,6 @@ import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
 
-
 const Login = () => {
   const [show, setShow] = useState(false);
   const handleClick = () => setShow(!show);
@@ -22,7 +21,7 @@ const Login = () => {
     setLoading(true);
     if (!email || !password) {
       toast({
-        title: "Please Fill all the Feilds",
+        title: "Enter all fields please",
         status: "warning",
         duration: 5000,
         isClosable: true,
@@ -37,12 +36,13 @@ const Login = () => {
           "Content-type": "application/json",
         },
       };
-
+      //login
       const { data } = await axios.post(
         "/api/user/login",
         { email, password },
         config
       );
+      //login toast
       toast({
         title: "Login Successful",
         status: "success",
@@ -50,6 +50,7 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
+      //setting our info for later
       localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
       history.push("/chats");
@@ -86,7 +87,7 @@ const Login = () => {
             type={show ? "text" : "password"}
             placeholder="Enter password"
           />
-          <InputRightElement width="4.5rem">
+          <InputRightElement width="72px">
             <Button h="1.75rem" size="sm" onClick={handleClick}>
               {show ? "Hide" : "Show"}
             </Button>

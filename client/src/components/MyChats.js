@@ -1,5 +1,5 @@
 import { AddIcon } from "@chakra-ui/icons";
-import { Box, Stack, Text } from "@chakra-ui/layout";
+import { Box, Stack, Text } from "@chakra-ui/react";
 import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useEffect, useState } from "react";
@@ -58,7 +58,7 @@ const MyChats = ({ fetchAgain }) => {
         pb={3}
         px={3}
         fontSize={{ base: "28px", md: "30px" }}
-        fontFamily="Work sans"
+        fontFamily="ubuntu"
         d="flex"
         w="100%"
         justifyContent="space-between"

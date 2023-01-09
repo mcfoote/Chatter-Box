@@ -134,7 +134,7 @@ const GroupChatModal = ({ children }) => {
         <ModalContent>
           <ModalHeader
             fontSize="35px"
-            fontFamily="Work sans"
+            fontFamily="ubuntu"
             d="flex"
             justifyContent="center"
           >
@@ -151,7 +151,7 @@ const GroupChatModal = ({ children }) => {
             </FormControl>
             <FormControl>
               <Input
-                placeholder="Add Users"
+                placeholder="Add Users ex: uglydumbnerd,isain1,Daniel"
                 mb={1}
                 onChange={(e) => handleSearch(e.target.value)}
               />

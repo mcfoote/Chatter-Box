@@ -1,9 +1,9 @@
 const mongoose = require("mongoose");
+const colors = require("colors");
 
-
-const connectDB = async () => {
+const DB = async () => {
   try {
-    const conn = await mongoose.connect(process.env.MONGODB_URI || 'mongodb://127.0.0.1:27017/MessengerDB', {
+    const conn = await mongoose.connect(process.env.MONGO_URI || 'mongodb://127.0.0.1:27017/MessengerDB', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
       useFindAndModify: true,
@@ -16,4 +16,4 @@ const connectDB = async () => {
   }
 };
 
-module.exports = connectDB;
+module.exports = DB;

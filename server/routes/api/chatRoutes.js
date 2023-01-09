@@ -3,19 +3,19 @@ const {
   accessChat,
   fetchChats,
   createGroupChat,
-  removeFromGroup,
-  addToGroup,
+  removeGroupMembers,
+  addIntoGroup,
   renameGroup,
 } = require("../../controllers/chatControllers");
-const { protect } = require("../../utils/authMiddleware");
+const { bearerAuth } = require("../../util/authMiddleware");
 
 const router = express.Router();
 
-router.route("/").post(protect, accessChat);
-router.route("/").get(protect, fetchChats);
-router.route("/group").post(protect, createGroupChat);
-router.route("/rename").put(protect, renameGroup);
-router.route("/groupremove").put(protect, removeFromGroup);
-router.route("/groupadd").put(protect, addToGroup);
+router.route("/").post(bearerAuth, accessChat);
+router.route("/").get(bearerAuth, fetchChats);
+router.route("/group").post(bearerAuth, createGroupChat);
+router.route("/rename").put(bearerAuth, renameGroup);
+router.route("/groupremove").put(bearerAuth, removeGroupMembers);
+router.route("/groupadd").put(bearerAuth, addIntoGroup);
 
 module.exports = router;

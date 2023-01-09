@@ -1,13 +1,13 @@
 const express = require("express");
 const {
-  allMessages,
+  getMesseges,
   sendMessage,
 } = require("../../controllers/messageControllers");
-const { protect } = require("../../utils/authMiddleware");
+const { bearerAuth } = require("../../util/authMiddleware");
 
 const router = express.Router();
-
-router.route("/:chatId").get(protect, allMessages);
-router.route("/").post(protect, sendMessage);
+//collecting the routes
+router.route("/:chatId").get(bearerAuth, getMesseges);
+router.route("/").post(bearerAuth, sendMessage);
 
 module.exports = router;

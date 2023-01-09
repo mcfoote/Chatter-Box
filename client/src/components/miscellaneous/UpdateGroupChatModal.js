@@ -83,7 +83,6 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
       );
 
       console.log(data._id);
-      // setSelectedChat("");
       setSelectedChat(data);
       setFetchAgain(!fetchAgain);
       setRenameLoading(false);
@@ -212,7 +211,7 @@ const UpdateGroupChatModal = ({ fetchMessages, fetchAgain, setFetchAgain }) => {
         <ModalContent>
           <ModalHeader
             fontSize="35px"
-            fontFamily="Work sans"
+            fontFamily="ubuntu"
             d="flex"
             justifyContent="center"
           >

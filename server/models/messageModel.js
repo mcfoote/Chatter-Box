@@ -14,7 +14,6 @@ const messageSchema = new Schema(
       type: Schema.Types.ObjectId,
       ref: "Chat",
     },
-    //testing socket.io but resolved into more problems then it was worth
     readBy: [
       {
         type: Schema.Types.ObjectId,

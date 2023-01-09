@@ -2,8 +2,8 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const generateToken = require("../config/generateToken");
 
-//searches all users
-const allUsers = asyncHandler(async (req, res) => {
+//getting all users
+const getAllUsers = asyncHandler(async (req, res) => {
   const keyword = req.query.search
     ? {
         $or: [
@@ -17,31 +17,29 @@ const allUsers = asyncHandler(async (req, res) => {
   res.send(users);
 });
 
-//creates new users
-const registerUser = asyncHandler(async (req, res) => {
-  //pulls new info from inputs
+//we will create users here
+const createUsers = asyncHandler(async (req, res) => {
   const { name, email, password, pic } = req.body;
-  //checks if the info doesnt exist if so send error code then send error
+  // see if the feilds were entered correctly
   if (!name || !email || !password) {
     res.status(400);
-    throw new Error("Please Enter all the Feilds");
+    throw new Error("createUsers recieved no data");
   }
-  //if all the Feilds are inputed then continue
-  //checks if the email already exist
+
   const userExists = await User.findOne({ email });
-  //if the user does then send an error code
+  //if the user exist we stop here
   if (userExists) {
     res.status(400);
     throw new Error("User already exists");
   }
-  //if user doesnt exist the we will create it
+  //create the user
   const user = await User.create({
     name,
     email,
     password,
     pic,
   });
-  //after the user has been created then we send a succses and report a .json with the login info
+  //then send a succses code and generate a token
   if (user) {
     res.status(201).json({
       _id: user._id,
@@ -49,24 +47,20 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       isAdmin: user.isAdmin,
       pic: user.pic,
-      //generate token that we will use for later on in bearer authentication
       token: generateToken(user._id),
     });
   } else {
-    //if something goes wrong then we will send an error
     res.status(400);
     throw new Error("User not found");
   }
 });
-
-//we will use this route to login users
-const authUser = asyncHandler(async (req, res) => {
-  //first we will recieve the email and password
+//we will login our user
+const loginUser = asyncHandler(async (req, res) => {
+  //gather our info and set them to varibles to be used later
   const { email, password } = req.body;
-  //check our database for a user with the same email
+  //see if we can find them in the db by email
   const user = await User.findOne({ email });
-  //if this succededs then we wait to match a password with our hashed password
-  //if succsesfull then we send a res.json with our token for authentication
+  //user does actully exist and the password matches the hashed password then we send them through
   if (user && (await user.matchPassword(password))) {
     res.json({
       _id: user._id,
@@ -76,12 +70,10 @@ const authUser = asyncHandler(async (req, res) => {
       pic: user.pic,
       token: generateToken(user._id),
     });
-    //if something is incorrect we will send an error with description that the email and password
-    //are incorrect for security reasons
   } else {
     res.status(401);
     throw new Error("Invalid Email or Password");
   }
 });
 
-module.exports = { allUsers, registerUser, authUser };
+module.exports = { getAllUsers, createUsers, loginUser };

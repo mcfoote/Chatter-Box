@@ -1,4 +1,4 @@
-const { Schema, model } = require('mongoose');
+const { Schema, model } = require("mongoose");
 const bcrypt = require("bcryptjs");
 
 const userSchema = new Schema(
@@ -16,12 +16,12 @@ const userSchema = new Schema(
       type: "String",
       required: true,
     },
-    //tried testing picture functionality but could not get it
+    //Tested Picture Functionality couldnt do it so i made it a corgi for fun
     pic: {
       type: "String",
       required: true,
       default:
-        "https://icon-library.com/images/anonymous-avatar-icon/anonymous-avatar-icon-25.jpg",
+        "https://mymodernmet.com/wp/wp-content/uploads/2020/10/cooper-baby-corgi-dogs-8.jpg",
     },
     isAdmin: {
       type: Boolean,
@@ -31,16 +31,16 @@ const userSchema = new Schema(
   },
   { timestaps: true }
 );
-//checking password at log in
+//checking matched password
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };
-
+//hashing passwords for security purposes
 userSchema.pre("save", async function (next) {
   if (!this.isModified) {
     next();
   }
-//hashing the password for incryption
+
   const salt = await bcrypt.genSalt(10);
   this.password = await bcrypt.hash(this.password, salt);
 });

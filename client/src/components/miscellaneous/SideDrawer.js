@@ -5,13 +5,10 @@ import { Box, Text } from "@chakra-ui/layout";
 import {
   Menu,
   MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemOption,
-  MenuGroup,
-  MenuOptionGroup,
   MenuDivider,
-} from '@chakra-ui/react'
+  MenuItem,
+  MenuList,
+} from "@chakra-ui/react";
 import {
   Drawer,
   DrawerBody,
@@ -26,7 +23,7 @@ import { useHistory } from "react-router-dom";
 import { useState } from "react";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
-import ChatLoading from "./ChatLoading";
+import ChatLoading from "../ChatLoading";
 import { Spinner } from "@chakra-ui/spinner";
 import ProfileModal from "./ProfileModal";
 import NotificationBadge from "react-notification-badge";
@@ -144,7 +141,7 @@ function SideDrawer() {
             </Text>
           </Button>
         </Tooltip>
-        <Text fontSize="2xl" fontFamily="Work sans">
+        <Text fontSize="2xl" fontFamily="ubuntu">
           Chatter-Box
         </Text>
         <div>
