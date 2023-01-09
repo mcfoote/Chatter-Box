@@ -31,8 +31,6 @@ const Login = () => {
       setLoading(false);
       return;
     }
-
-    // console.log(email, password);
     try {
       const config = {
         headers: {
@@ -45,8 +43,6 @@ const Login = () => {
         { email, password },
         config
       );
-
-      // console.log(JSON.stringify(data));
       toast({
         title: "Login Successful",
         status: "success",

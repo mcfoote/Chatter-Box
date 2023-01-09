@@ -1,44 +1,86 @@
-const express = require('express');
-const path = require('path');
-const { ApolloServer } = require('apollo-server-express');
-const { typeDefs, resolvers } = require('./schemas');
-const { authMiddleware } = require('./util/auth');
 
-const db = require('./config/connection.js');
+const express = require("express");
+const connectDB = require("./config/db");
+const dotenv = require("dotenv");
+const apiRoutes = require("./routes/api");
+
+
+const { notFound, errorHandler } = require("./utils/errorMiddleware");
+const path = require("path");
+
+dotenv.config();
+connectDB();
+const app = express();
+
+app.use(express.json()); 
+
+
+app.use("/api", apiRoutes);
+
+
+const __dirname1 = path.resolve();
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "/client/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running..");
+  });
+}
+
+
+app.use(notFound);
+app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 
-const app = express();
+const server = app.listen(
+  PORT,
+  console.log(`Server running on PORT ${PORT}`)
+);
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
-app.use('/api/user',userRoutes)
-
-// stores the server and options to 'server' variable
-const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    context: authMiddleware,
+const io = require("socket.io")(server, {
+  pingTimeout: 60000,
+  cors: {
+    origin: "http://localhost:3000",
+    // credentials: true,
+  },
 });
 
+io.on("connection", (socket) => {
+  console.log("Connected to socket.io");
+  socket.on("setup", (userData) => {
+    socket.join(userData._id);
+    socket.emit("connected");
+  });
 
-//serve homepage
-app.get('/', (req, res) => {
-    res.sendFile(path.join(_dirname, '../client/src/index.html'));
-})
+  socket.on("join chat", (room) => {
+    socket.join(room);
+    console.log("User Joined Room: " + room);
+  });
+  socket.on("typing", (room) => socket.in(room).emit("typing"));
+  socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
 
-//function to start server
-const startApolloServer = async (typeDefs, resolvers) => {
 
-    await server.start();
-    server.applyMiddleware({ app });
+  socket.on("new message", (newMessageRecieved) => {
+    var chat = newMessageRecieved.chat;
 
-    db.once('open', () => {
-        app.listen(PORT, () => console.log(`... Listening on port: ${PORT} `));
+    if (!chat.users) return console.log("chat.users not defined");
+
+    chat.users.forEach((user) => {
+      if (user._id == newMessageRecieved.sender._id) return;
+
+      socket.in(user._id).emit("message recieved", newMessageRecieved);
     });
+  });
 
-}
 
-//call function to start server
-startApolloServer(typeDefs, resolvers);
+  socket.off("setup", () => {
+    console.log("USER DISCONNECTED");
+    socket.leave(userData._id);
+  });
+});
