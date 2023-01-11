@@ -3,9 +3,11 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
-import axios from "axios";
 import { useState } from "react";
 import { useHistory } from "react-router-dom"
+import { ADD_USER } from '../../util/mutations'
+import { useMutation } from '@apollo/client';
+import Auth from '../../util/auth'
 
 
 
@@ -15,15 +17,18 @@ const Signup = () => {
   const handleClick = () => setShow(!show);
   const toast = useToast();
   const history = useHistory();
+  const [createUser, { error, data }] = useMutation(ADD_USER);
+  const [name, setName] = useState('');
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [confirmpassword, setConfirmpassword] = useState('');
+  const [password, setPassword] = useState('');
 
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [confirmpassword, setConfirmpassword] = useState();
-  const [password, setPassword] = useState();
 
 
-  const submitHandler = async () => {
-    if (!name || !email || !password || !confirmpassword) {
+  const submitHandler = async (e) => {
+    e.preventDefault();
+    if (!name || !username || !email || !password || !confirmpassword) {
       toast({
         title: "Please Fill all the Feilds",
         status: "warning",
@@ -43,24 +48,17 @@ const Signup = () => {
       });
       return;
     }
-    console.log(name, email, password);
+    console.log(name, username, email, password);
+
     try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
-      const { data } = await axios.post(
-        "/api/user",
-        {
-          name,
-          email,
-          password,
-          
-        },
-        config
-      );
+      const data = await createUser({
+        variables: { name, username, email, password },
+      });
+
+      Auth.login(data.createUser.token);
+      console.log(error)
       console.log(data);
+
       toast({
         title: "Registration Successful",
         status: "success",
@@ -72,9 +70,9 @@ const Signup = () => {
 
       history.push("/chats");
     } catch (error) {
+      console.error(error)
       toast({
         title: "Error Occured!",
-        description: error.response.data.message,
         status: "error",
         duration: 5000,
         isClosable: true,
@@ -84,62 +82,84 @@ const Signup = () => {
   };
 
   return (
-    <VStack spacing="5px">
-      <FormControl id="first-name" isRequired>
-        <FormLabel>Name</FormLabel>
-        <Input
-          placeholder="Enter Your Name"
-          onChange={(e) => setName(e.target.value)}
-        />
-      </FormControl>
-      <FormControl id="email" isRequired>
-        <FormLabel>Email Address</FormLabel>
-        <Input
-          type="email"
-          placeholder="Enter Your Email Address"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </FormControl>
-      <FormControl id="password" isRequired>
-        <FormLabel>Password</FormLabel>
-        <InputGroup size="md">
-          <Input
-            type={show ? "text" : "password"}
-            placeholder="Enter Password"
-            onChange={(e) => setPassword(e.target.value)}
-          />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
-              {show ? "Hide" : "Show"}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
-      </FormControl>
-      <FormControl id="password" isRequired>
-        <FormLabel>Confirm Password</FormLabel>
-        <InputGroup size="md">
-          <Input
-            type={show ? "text" : "password"}
-            placeholder="Confirm password"
-            onChange={(e) => setConfirmpassword(e.target.value)}
-          />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={handleClick}>
-              {show ? "Hide" : "Show"}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
-      </FormControl>
-      <Button
-        colorScheme="blue"
-        width="100%"
-        style={{ marginTop: 15 }}
-        onClick={submitHandler}
-      >
-        Sign Up
-      </Button>
-    </VStack>
+    <div>
+      {data ? (
+        <p>
+          Success! You may now <span href="./Login.js">login</span>
+        </p>
+      ) : (
+        <VStack spacing="5px">
+          <FormControl id="first-name" isRequired>
+            <FormLabel>Name</FormLabel>
+            <Input
+              placeholder="Enter Your Name"
+              onChange={(e) => setName(e.target.value)}
+            />
+          </FormControl>
+          <FormControl id="user-name" isRequired>
+            <FormLabel>Username</FormLabel>
+            <Input
+              placeholder="Enter Your Name"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </FormControl>
+          <FormControl id="email" isRequired>
+            <FormLabel>Email Address</FormLabel>
+            <Input
+              type="email"
+              placeholder="Enter Your Email Address"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </FormControl>
+          <FormControl id="password" isRequired>
+            <FormLabel>Password</FormLabel>
+            <InputGroup size="md">
+              <Input
+                type={show ? "text" : "password"}
+                placeholder="Enter Password"
+                onChange={(e) => setPassword(e.target.value)}
+              />
+              <InputRightElement width="4.5rem">
+                <Button h="1.75rem" size="sm" onClick={handleClick}>
+                  {show ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </FormControl>
+          <FormControl id="password" isRequired>
+            <FormLabel>Confirm Password</FormLabel>
+            <InputGroup size="md">
+              <Input
+                type={show ? "text" : "password"}
+                placeholder="Confirm password"
+                onChange={(e) => setConfirmpassword(e.target.value)}
+              />
+              <InputRightElement width="4.5rem">
+                <Button h="1.75rem" size="sm" onClick={handleClick}>
+                  {show ? "Hide" : "Show"}
+                </Button>
+              </InputRightElement>
+            </InputGroup>
+          </FormControl>
+          <Button
+            colorScheme="blue"
+            width="100%"
+            style={{ marginTop: 15 }}
+            onClick={submitHandler}
+          >
+            Sign Up
+          </Button>
+        </VStack>
+      )}
+      {error && (
+        <div className="my-3 p-3 bg-danger text-white">
+          {error.message}
+        </div>
+      )}
+    </div>
+
   );
+
 };
 
 export default Signup;

@@ -5,15 +5,15 @@ const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./util/auth');
 
 const db = require('./config/connection.js');
-
-const PORT = process.env.PORT || 5000;
+const { config } = require('dotenv');
+config();
+const PORT = process.env.PORT || 3001;
 
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use('/api/user',userRoutes)
 
 // stores the server and options to 'server' variable
 const server = new ApolloServer({
@@ -24,9 +24,9 @@ const server = new ApolloServer({
 
 
 //serve homepage
-app.get('/', (req, res) => {
-    res.sendFile(path.join(_dirname, '../client/src/index.html'));
-})
+// app.get('/', (req, res) => {
+//     res.sendFile(path.join(__dirname, '../client/src/index.html'));
+// })
 
 //function to start server
 const startApolloServer = async (typeDefs, resolvers) => {

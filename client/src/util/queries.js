@@ -11,8 +11,8 @@ export const QUERY_USER = gql`
 `;
 
 export const QUERY_SINGLE_USER = gql`
-    query singleUser($profileId: ID!) {
-        user(userId: ID!) {
+    query singleUser($userId: ID!) {
+        user(userId: $userId) {
             _id
             name
         }

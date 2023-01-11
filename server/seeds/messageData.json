@@ -1,20 +1,7 @@
 [
     {
-        "_id": 1,
-        "message": "test message content one",
-        "createdAt": "2022-12-20",
-        "userId": 1
-    },
-    {
-        "_id": 2,
-        "message": "test message content two",
-        "createdAt": "2022-12-21",
-        "userId": 2
-    },
-    {
-        "_id": 3,
-        "message": "test message content three",
-        "createdAt": "2022-12-22",
-        "userId": 3
+        "sender": "63bb00e1c26baa6f6000cdf6",
+        "content": "2022-12-20",
+        "chat": "63bb0293d6e3ef17bcccfd7f"
     }
 ]

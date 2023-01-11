@@ -3,9 +3,12 @@ import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
 import { useState } from "react";
-import axios from "axios";
 import { useToast } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
+import { Route } from "react-router-dom"
+import { useMutation } from '@apollo/client';
+import { LOGIN_USER } from '../../util/mutations'
+import Auth from '../../util/auth'
 
 
 const Login = () => {
@@ -15,14 +18,18 @@ const Login = () => {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [loading, setLoading] = useState(false);
-
   const history = useHistory();
+  const [login] = useMutation(LOGIN_USER);
 
-  const submitHandler = async () => {
+
+
+
+  const submitHandler = async (e) => {
+    e.preventDefault();
     setLoading(true);
     if (!email || !password) {
       toast({
-        title: "Please Fill all the Feilds",
+        title: "Please Fill all the Fields",
         status: "warning",
         duration: 5000,
         isClosable: true,
@@ -34,17 +41,11 @@ const Login = () => {
 
     // console.log(email, password);
     try {
-      const config = {
-        headers: {
-          "Content-type": "application/json",
-        },
-      };
+      const { data } = await login({
+        variables: { email, password },
+      });
 
-      const { data } = await axios.post(
-        "/api/user/login",
-        { email, password },
-        config
-      );
+      Auth.login(data.login.token);
 
       // console.log(JSON.stringify(data));
       toast({
@@ -54,9 +55,21 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      // localStorage.setItem("userInfo", JSON.stringify(data));
       setLoading(false);
       history.push("/chats");
+      
+      // if (!Auth.login(data.login.token)) {
+      //   toast({
+      //     title: 'Error occured',
+      //     status: "error",
+      //     duration: 5000,
+      //     isClosable: true,
+      //     position: "bottom",
+      //   })        
+      // } else {
+        
+      // }
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -67,15 +80,22 @@ const Login = () => {
         position: "bottom",
       });
       setLoading(false);
+      
+      
     }
+    
   };
+
+  const handleFormSubmit = async () => {
+    
+  }
 
   return (
     <VStack spacing="10px">
       <FormControl id="email" isRequired>
         <FormLabel>Email Address</FormLabel>
         <Input
-          value={email}
+          value={email || ''}
           type="email"
           placeholder="Enter Your Email Address"
           onChange={(e) => setEmail(e.target.value)}
@@ -85,7 +105,7 @@ const Login = () => {
         <FormLabel>Password</FormLabel>
         <InputGroup size="md">
           <Input
-            value={password}
+            value={password || ''}
             onChange={(e) => setPassword(e.target.value)}
             type={show ? "text" : "password"}
             placeholder="Enter password"
@@ -103,6 +123,7 @@ const Login = () => {
         style={{ marginTop: 15 }}
         onClick={submitHandler}
         isLoading={loading}
+        onSubmit={handleFormSubmit}
       >
         Login
       </Button>

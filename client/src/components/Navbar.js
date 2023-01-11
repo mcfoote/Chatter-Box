@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import './style/Navbar.css'
 
 const Navbar = () => {
     return (
@@ -9,7 +10,7 @@ const Navbar = () => {
 
             <ul className="navbar">
                 <button type="button" id="hamburger">
-                    <GiHamburgerMenu id="hamburger" />
+                    
                 </button>
                 <li className="noStyle">
                     <a href="/" className="navItem">Home</a>
