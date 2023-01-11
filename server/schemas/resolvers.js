@@ -1,6 +1,7 @@
 const { signToken } = require('../util/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Message } = require('../models');
+const { sign } = require('jsonwebtoken');
 
 const resolvers = {
     //todo define resolvers
@@ -24,9 +25,10 @@ const resolvers = {
     },
 
     Mutation: {
-        createUser: async (parent, { name, email, password }) => {
-            const user = await User.create(args);
-            return user;
+        createUser: async (parent, { name, username, email, password }) => {
+            const user = await User.create({ name, username, email, password });
+            const token = signToken(user)
+            return { token, user };
         },
         createMessage: async (parent, args, context) => {
             if (context.user) {
@@ -42,7 +44,7 @@ const resolvers = {
                 throw new AuthenticationError('No user with this email found!');
             }
 
-            const validPw = await profile.isCorrectPassword(password);
+            const validPw = await user.matchPassword(password);
 
             if (!validPw) {
                 throw new AuthenticationError('Incorrect password, try again.');
@@ -52,8 +54,10 @@ const resolvers = {
             return { token, user };
         },
         // will uncomment as functionality expands but will cause problems if left active
-        // updateName: async (parent, args, context) => {
-
+            // updateName: async (parent, args, context) => {
+            //     return User.findByIdAndUpdate(
+            //         { _id: user._id }
+            //     )
         // },
         // updateUsername: async (parent, args, context) => {
 
