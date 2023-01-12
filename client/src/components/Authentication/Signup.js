@@ -2,13 +2,10 @@ import { Button } from "@chakra-ui/button";
 import { FormControl, FormLabel } from "@chakra-ui/form-control";
 import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
-import { useToast } from "@chakra-ui/toast";
+import { useToast } from "@chakra-ui/react";
 import axios from "axios";
 import { useState } from "react";
-import { useHistory } from "react-router-dom"
-
-
-
+import { useHistory } from "react-router";
 
 const Signup = () => {
   const [show, setShow] = useState(false);
@@ -20,22 +17,26 @@ const Signup = () => {
   const [email, setEmail] = useState();
   const [confirmpassword, setConfirmpassword] = useState();
   const [password, setPassword] = useState();
+  const [picLoading, setPicLoading] = useState(false);
 
-
+  //this will activate on press
   const submitHandler = async () => {
     if (!name || !email || !password || !confirmpassword) {
+      //we will send a toast which comes from chakra
+      //they will be a tool we use for responsiveness
       toast({
-        title: "Please Fill all the Feilds",
+        title: "Enter all fields please",
         status: "warning",
         duration: 5000,
         isClosable: true,
         position: "bottom",
       });
+      setPicLoading(false);
       return;
     }
     if (password !== confirmpassword) {
       toast({
-        title: "Passwords Do Not Match",
+        title: "Your email or password was invalid",
         status: "warning",
         duration: 5000,
         isClosable: true,
@@ -50,17 +51,19 @@ const Signup = () => {
           "Content-type": "application/json",
         },
       };
+
+      //creating users
       const { data } = await axios.post(
         "/api/user",
         {
           name,
           email,
           password,
-          
         },
         config
       );
       console.log(data);
+        //after we will send a toast
       toast({
         title: "Registration Successful",
         status: "success",
@@ -68,8 +71,8 @@ const Signup = () => {
         isClosable: true,
         position: "bottom",
       });
+      //set our local storage so we can use it later
       localStorage.setItem("userInfo", JSON.stringify(data));
-
       history.push("/chats");
     } catch (error) {
       toast({
@@ -80,8 +83,10 @@ const Signup = () => {
         isClosable: true,
         position: "bottom",
       });
+      
     }
   };
+
 
   return (
     <VStack spacing="5px">
@@ -130,11 +135,13 @@ const Signup = () => {
           </InputRightElement>
         </InputGroup>
       </FormControl>
+
       <Button
         colorScheme="blue"
         width="100%"
         style={{ marginTop: 15 }}
         onClick={submitHandler}
+        isLoading={picLoading}
       >
         Sign Up
       </Button>

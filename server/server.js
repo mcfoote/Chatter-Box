@@ -1,44 +1,72 @@
-const express = require('express');
-const path = require('path');
-const { ApolloServer } = require('apollo-server-express');
-const { typeDefs, resolvers } = require('./schemas');
-const { authMiddleware } = require('./util/auth');
+const express = require("express");
+const DB = require("./config/db");
+const dotenv = require("dotenv");
+const routes = require("./routes");
+const path = require("path");
 
-const db = require('./config/connection.js');
-
-const PORT = process.env.PORT || 5000;
-
+dotenv.config();
+DB();
 const app = express();
-
-app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(routes);
 
-app.use('/api/user',userRoutes)
+ const __dirname1 = path.resolve();
 
-// stores the server and options to 'server' variable
-const server = new ApolloServer({
-    typeDefs,
-    resolvers,
-    context: authMiddleware,
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname1, "/client/build")));
+
+  app.get("*", (req, res) =>
+    res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"))
+  );
+} else {
+  app.get("/", (req, res) => {
+    res.send("API is running..");
+  });
+} 
+
+const PORT = process.env.PORT;
+
+const server = app.listen(
+  PORT,
+  console.log(`Server running on PORT ${PORT}...`)
+);
+//here we use socket to deal with the realtime chat aspect
+const io = require("socket.io")(server, {
+  pingTimeout: 80000,
+  cors: {
+    origin: "http://localhost:3000",
+  },
 });
+//the start of the socket connection
+io.on("connection", (socket) => {
+  console.log("Connected to socket.io");
+  socket.on("setup", (userData) => {
+    socket.join(userData._id);
+    socket.emit("connected");
+  });
+  //checks when someone joins a chat
+  socket.on("join chat", (room) => {
+    socket.join(room);
+    console.log("User Joined Room: " + room);
+  });
+  //check for typing
+  socket.on("typing", (room) => socket.in(room).emit("typing"));
+  socket.on("stop typing", (room) => socket.in(room).emit("stop typing"));
+  //checks for live time messege
+  socket.on("new message", (newMessageRecieved) => {
+    var chat = newMessageRecieved.chat;
 
+    if (!chat.users) return console.log("chat.users not defined");
 
-//serve homepage
-app.get('/', (req, res) => {
-    res.sendFile(path.join(_dirname, '../client/src/index.html'));
-})
+    chat.users.forEach((user) => {
+      if (user._id == newMessageRecieved.sender._id) return;
 
-//function to start server
-const startApolloServer = async (typeDefs, resolvers) => {
-
-    await server.start();
-    server.applyMiddleware({ app });
-
-    db.once('open', () => {
-        app.listen(PORT, () => console.log(`... Listening on port: ${PORT} `));
+      socket.in(user._id).emit("message recieved", newMessageRecieved);
     });
-
-}
-
-//call function to start server
-startApolloServer(typeDefs, resolvers);
+  });
+  //shuts the socket off so we dont slowdown the server
+  socket.off("setup", () => {
+    console.log("USER DISCONNECTED");
+    socket.leave(userData._id);
+  });
+});

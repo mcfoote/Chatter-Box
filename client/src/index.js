@@ -1,18 +1,21 @@
 import React from "react";
 import ReactDOM from "react-dom";
+
+import "./index.css";
 import App from "./App";
 import { ChakraProvider } from "@chakra-ui/react";
-import { BrowserRouter } from "react-router-dom";
-import "./index.css";
 import ChatProvider from "./Context/ChatProvider";
+import { BrowserRouter } from "react-router-dom";
 
 ReactDOM.render(
-  <ChatProvider>
+/* using chakra to deal with modals and other css things */
+  <ChakraProvider>
     <BrowserRouter>
-      <ChakraProvider>
+      <ChatProvider>
         <App />
-      </ChakraProvider>
+      </ChatProvider>
     </BrowserRouter>
-  </ChatProvider>,
+  </ChakraProvider>,
   document.getElementById("root")
 );
+
