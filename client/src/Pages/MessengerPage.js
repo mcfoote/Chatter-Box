@@ -1,5 +1,6 @@
 import Navbar from '../components/Navbar'
 import './style/MessengerPage.css'
+import Logout from '../components/Authentication/Logout'
 
 
 const Chatpage = () => {

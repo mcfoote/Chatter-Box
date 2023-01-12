@@ -1,7 +1,6 @@
 const { signToken } = require('../util/auth');
 const { AuthenticationError } = require('apollo-server-express');
 const { User, Message } = require('../models');
-const { sign } = require('jsonwebtoken');
 
 const resolvers = {
     //todo define resolvers
@@ -53,24 +52,7 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        // will uncomment as functionality expands but will cause problems if left active
-            // updateName: async (parent, args, context) => {
-            //     return User.findByIdAndUpdate(
-            //         { _id: user._id }
-            //     )
-        // },
-        // updateUsername: async (parent, args, context) => {
-
-        // },
-        // updateEmail: async (parent, args, context) => {
-
-        // },
-        // updatePassword: async (parent, args, context) => {
-
-        // },
-        // updateMessage: async (parent, args, context) => {
-
-        // },
+        logout
     }
 }
 

@@ -5,10 +5,9 @@ import { VStack } from "@chakra-ui/layout";
 import { useState } from "react";
 import { useToast } from "@chakra-ui/react";
 import { useHistory } from "react-router-dom";
-import { Route } from "react-router-dom"
 import { useMutation } from '@apollo/client';
-import { LOGIN_USER } from '../../util/mutations'
-import Auth from '../../util/auth'
+import { LOGIN_USER } from '../../util/mutations';
+import Auth from '../../util/auth';
 
 
 const Login = () => {
@@ -21,9 +20,6 @@ const Login = () => {
   const history = useHistory();
   const [login] = useMutation(LOGIN_USER);
 
-
-
-
   const submitHandler = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -35,19 +31,17 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
-      setLoading(false);
+      // setLoading(false);
       return;
     }
 
-    // console.log(email, password);
+    console.log(email, password);
     try {
       const { data } = await login({
         variables: { email, password },
       });
 
-      Auth.login(data.login.token);
-
-      // console.log(JSON.stringify(data));
+      console.log(JSON.stringify(data));
       toast({
         title: "Login Successful",
         status: "success",
@@ -55,21 +49,10 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
-      // localStorage.setItem("userInfo", JSON.stringify(data));
-      setLoading(false);
-      history.push("/chats");
-      
-      // if (!Auth.login(data.login.token)) {
-      //   toast({
-      //     title: 'Error occured',
-      //     status: "error",
-      //     duration: 5000,
-      //     isClosable: true,
-      //     position: "bottom",
-      //   })        
-      // } else {
-        
-      // }
+      history.push("/messager");
+
+      // setLoading(false);
+
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -79,16 +62,9 @@ const Login = () => {
         isClosable: true,
         position: "bottom",
       });
-      setLoading(false);
-      
-      
+      // setLoading(false);
     }
-    
   };
-
-  const handleFormSubmit = async () => {
-    
-  }
 
   return (
     <VStack spacing="10px">
@@ -123,7 +99,6 @@ const Login = () => {
         style={{ marginTop: 15 }}
         onClick={submitHandler}
         isLoading={loading}
-        onSubmit={handleFormSubmit}
       >
         Login
       </Button>

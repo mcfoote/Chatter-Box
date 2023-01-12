@@ -4,10 +4,10 @@ import { Input, InputGroup, InputRightElement } from "@chakra-ui/input";
 import { VStack } from "@chakra-ui/layout";
 import { useToast } from "@chakra-ui/toast";
 import { useState } from "react";
-import { useHistory } from "react-router-dom"
-import { ADD_USER } from '../../util/mutations'
+import { useHistory } from "react-router-dom";
+import { ADD_USER } from '../../util/mutations';
 import { useMutation } from '@apollo/client';
-import Auth from '../../util/auth'
+import Auth from '../../util/auth';
 
 
 
@@ -55,7 +55,7 @@ const Signup = () => {
         variables: { name, username, email, password },
       });
 
-      Auth.login(data.createUser.token);
+      Auth.login(data.createUser);
       console.log(error)
       console.log(data);
 
@@ -68,7 +68,7 @@ const Signup = () => {
       });
       localStorage.setItem("userInfo", JSON.stringify(data));
 
-      history.push("/chats");
+      history.push("/messenger");
     } catch (error) {
       console.error(error)
       toast({
