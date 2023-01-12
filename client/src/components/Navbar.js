@@ -1,5 +1,5 @@
 import { Box, Text } from "@chakra-ui/layout";
-import { Button } from "@chakra-ui/Button";
+import { Button } from "@chakra-ui/button";
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import "./style/Navbar.css";
