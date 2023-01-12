@@ -1,9 +1,10 @@
 import Navbar from '../components/Navbar'
-import ThreadList from '../components/ChaatBox';
-import ChatBox from '../components/ChaatBox';
+import ThreadList from '../components/ChatBox';
+import ChatBox from '../components/ChatBox';
 import './style/MessengerPage.css';
 import { ChatState } from '../Context/ChatProvider';
 import { Box } from "@chakra-ui/layout";
+//import { useState } from 'react';
 
 
 const Chatpage = () => {
