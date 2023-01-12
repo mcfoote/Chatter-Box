@@ -1,22 +1,26 @@
-import React, { createContext, useContext, useEffect, useState } from "react";
-import { useHistory } from "react-router-dom";
+// import React, { createContext, useContext, useEffect, useState } from "react";
+// import { useHistory } from "react-router-dom";
 
-const ChatContext = createContext();
+// const ChatContext = createContext();
 
-const ChatProvider = ({ children }) => {
-  
-  const [user, setUser] = useState();
-  
+// const ChatProvider = ({ children }) => {
+//   const [user, setUser] = useState();
+//   const history = useHistory();
 
-  return (
-    <ChatContext.Provider>
-      {children}
-    </ChatContext.Provider>
-  );
-};
+//   useEffect(() => {
+//     const userInfo = JSON.parse(localStorage.getItem("userInfo"));
+//     setUser(userInfo);
 
- export const ChatState = () => {
-  return useContext(ChatContext);
-}; 
+//     if (!userInfo) {
+//       history.push("/");
+//     }
+//   }, [history]);
 
-export default ChatProvider;
+//   return <ChatContext.Provider value={{ user, setUser }}>{children}</ChatContext.Provider>;
+// };
+
+// export const ChatState = () => {
+//   return useContext(ChatContext);
+// };
+
+// export default ChatProvider;
