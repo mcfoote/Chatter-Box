@@ -6,6 +6,7 @@ import MessengerPage from './Pages/MessengerPage';
 // import Navbar from './components/Navbar'
 import './App.css';
 import AccountSettings from './Pages/AccountSettings'
+import Chats from './components/Chats'
 
 const client = new ApolloClient({
 
@@ -23,6 +24,7 @@ function App() {
                 <Route path="/" component={Homepage} exact />
                 <Route path="/messager" component={MessengerPage} exact />
                 <Route path="/settings" component={AccountSettings} exact />
+                <Route path="/chats" component={Chats}/>
             </BrowserRouter>
         </ApolloProvider>
     </div>

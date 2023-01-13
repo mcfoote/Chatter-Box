@@ -1,6 +1,6 @@
 const { signToken } = require('../util/auth');
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Message } = require('../models');
+const { User, Message, Chat } = require('../models');
 
 const resolvers = {
     //todo define resolvers
@@ -20,7 +20,11 @@ const resolvers = {
         // query all messages from a user
         messages: async () => {
             return Message.find({});
-        }
+        },
+        // chat: async () => {
+        //     return Chat.find({});
+        // },
+        
     },
 
     Mutation: {
@@ -52,6 +56,10 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
+        // createChat: async (parent, { chatName, users }) => {
+        //     const chat = await Chat.create( chatName, users );
+        //     return chat;
+        // }
     }
 }
 

@@ -1,18 +1,19 @@
 import React from 'react';
 import { Button } from "@chakra-ui/button";
-
+import { useHistory } from "react-router-dom";
 import './style/UserList.css'
 
 
 
 const UserList = ({ users }) => {
+    const history = useHistory();
+
     if (!users.length) {
         return <h3>No Profiles Yet</h3>;
     }
 
-    const addToList = () => {
-        const list = []
-        
+    const startChat = () => {
+        history.push("/chats");
     }
 
     return (
@@ -22,7 +23,7 @@ const UserList = ({ users }) => {
                     <div key={user._id} className='listStyle'>
                         <Button 
                         className='buttonStyle'
-                        onClick={addToList}>
+                        onClick={startChat}>
                             {user.name}
                         </Button>
                     </div>
