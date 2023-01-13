@@ -22,6 +22,7 @@ const server = new ApolloServer({
     context: authMiddleware,
 });
 
+/*
 app.use(express.static(path.join(__dirname, '../client/src')));
 /*
 if (process.env.NODE_ENV === 'production') {
