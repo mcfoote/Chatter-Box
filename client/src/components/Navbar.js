@@ -1,9 +1,13 @@
 import { Box, Text } from "@chakra-ui/layout";
 import { Button } from "@chakra-ui/button";
-import React, { useState } from "react";
+import React from "react";
 import { useHistory } from "react-router-dom";
 import Modal from "react-modal";
 import "./style/Navbar.css";
+import UserList from '../components/userList';
+
+import { QUERY_USER } from '../util/queries';
+import { useQuery } from "@apollo/client";
 
 const customStyles = {
   content: {
@@ -18,13 +22,15 @@ const customStyles = {
 
 const Navbar = () => {
   const history = useHistory();
+  const { loading, data } = useQuery(QUERY_USER);
+  const users = data?.users
 
   const logoutHandler = () => {
     localStorage.removeItem("userInfo");
     history.push("/");
   };
 
-  let subtitle;
+  // let subtitle;
   const [modalIsOpen, setIsOpen] = React.useState(false);
 
   function openModal() {
@@ -33,29 +39,37 @@ const Navbar = () => {
 
   function afterOpenModal() {
     // references are now sync'd and can be accessed.
-    subtitle.style.color = '#f00';
+    // subtitle.style.color = '#f00';
   }
 
   function closeModal() {
     setIsOpen(false);
   }
 
+
   return (
     <div className="masterNav">
       <Box>
         <h1>Welcome to Chatterbox!</h1>
         <Button variant="outline">
-          <i class="fa-light fa-message-plus"></i>
-          <Text onClick={openModal}>New Chat</Text>
+          <i className="fa-light fa-message-plus"></i>
+          <Text onClick={openModal}>
+          New Chat
+          </Text>
         </Button>
         <Modal
+          ariaHideApp={false}
           isOpen={modalIsOpen}
           onAfterOpen={afterOpenModal}
           onRequestClose={closeModal}
           style={customStyles}
-          contentLabel="Example Modal"
-        >
-          New Chat 2
+          contentLabel="userListModal"
+        > {loading ? (
+          <div>Loading...</div>
+        ) : (
+          <UserList
+            users={users}
+            title='List of all registered users'></UserList>)}
         </Modal>
         <Button variant="outline" onClick={logoutHandler}>
           Log out

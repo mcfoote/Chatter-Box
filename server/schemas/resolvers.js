@@ -11,7 +11,7 @@ const resolvers = {
         },
         // query all users in the database
         users: async () => {
-            return User.find({});
+            return User.find();
         },
         // query a specific/single message based on the userId and the messageId
         message: async () => {

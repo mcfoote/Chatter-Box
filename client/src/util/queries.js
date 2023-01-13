@@ -5,7 +5,9 @@ export const QUERY_USER = gql`
         users {
             _id
             name
-            messages
+            username
+            email
+            password
         }
     }
 `;
