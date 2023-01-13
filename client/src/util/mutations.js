@@ -35,3 +35,12 @@ export const LOGIN_USER = gql`
     }
     
 `
+
+// export const CREATE_CHAT = gql`
+//     mutation createChat($chatName: String, $users: users) {
+//         createChat(chatName: $chatName, users: $users) {
+//            chatName
+//            users
+//         }
+//     }
+// `
