@@ -12,7 +12,7 @@ const Chatpage = () => {
 
   return (
     <div style={{ width: "100%" }}>
-      {user && <Navbar />}
+      {<Navbar />}
       <Box
       display="flex"
       justifyContent="space-between"
