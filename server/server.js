@@ -24,7 +24,7 @@ const server = new ApolloServer({
 
 
 if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(path.join(__dirname, '../client/src')));
+    app.use(express.static(path.join(__dirname, './client/src')));
 }
   
 /*
