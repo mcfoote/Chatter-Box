@@ -4,6 +4,7 @@ import { useHistory } from "react-router-dom";
 import Navbar from '../components/Navbar'
 import { Box } from "@chakra-ui/react";
 import { Input } from "@chakra-ui/input";
+import './style/Chats.css'
 
 const Chats = () => {
     const history = useHistory();
