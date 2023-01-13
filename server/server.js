@@ -22,12 +22,12 @@ const server = new ApolloServer({
     context: authMiddleware,
 });
 
-/*
+
 if (process.env.NODE_ENV === 'production') {
     app.use(express.static(path.join(__dirname, '../client/src')));
-  }
+}
   
-
+/*
 //serve homepage
 app.get('/', (req, res) => {
      res.sendFile(path.join(__dirname, '../client/src/index.html'));
