@@ -4,6 +4,8 @@ const { ApolloServer } = require('apollo-server-express');
 const { typeDefs, resolvers } = require('./schemas');
 const { authMiddleware } = require('./util/auth');
 
+const path = require('path');
+
 const db = require('./config/connection.js');
 const { config } = require('dotenv');
 config();
@@ -20,6 +22,12 @@ const server = new ApolloServer({
     typeDefs,
     resolvers,
     context: authMiddleware,
+});
+
+app.use(express.static('public'));
+
+app.get('*', (req, res) => {
+    res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
 
 /*
