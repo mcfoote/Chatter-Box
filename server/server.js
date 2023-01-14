@@ -24,11 +24,11 @@ const server = new ApolloServer({
 
 
 app.use(express.static('public'));
-/*
+
 app.get('*', (req, res) => {
     res.sendFile(path.resolve(__dirname, 'public', 'index.html'));
 });
-*/
+
 
 app.use(express.static(path.join(__dirname, '../client/src')));
 
