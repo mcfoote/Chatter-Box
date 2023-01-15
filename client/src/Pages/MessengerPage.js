@@ -1,6 +1,7 @@
 import Navbar from '../components/Navbar'
-import ThreadList from '../components/ChatBox';
-import ChatBox from '../components/ChatBox';
+// import ThreadList from '../components/ChatBox';
+// import ChatBox from '../components/ChatBox';
+import Chats from '../components/Chats';
 import './style/MessengerPage.css';
 import { ChatState } from '../Context/ChatProvider';
 import { Box } from "@chakra-ui/layout";
@@ -8,21 +9,18 @@ import { Box } from "@chakra-ui/layout";
 
 
 const Chatpage = () => {
-  const { user } = ChatState();
+  //const { user } = ChatState();
 
   return (
-    <div style={{ width: "100%" }}>
-      {<Navbar />}
+    <div className='app' >
+      {<Navbar className="navbar"/>}
       <Box
       display="flex"
       justifyContent="space-between"
       w="100%"
       h="90vh">
-        {user && <ThreadList />}
-        {user && <ChatBox />}
+        <Chats />
       </Box>
-    
-      <h1>hello world</h1>
     </div>
   );
 };
