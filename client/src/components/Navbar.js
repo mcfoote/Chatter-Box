@@ -49,8 +49,11 @@ const Navbar = () => {
 
   return (
     <div className="masterNav">
-      <Box>
+      <Box className="main">
+        <div className="section1">
         <h1>Welcome to Chatterbox!</h1>
+        </div>
+        <div className="section2">
         <Button variant="outline">
           <i className="fa-light fa-message-plus"></i>
           <Text onClick={openModal}>
@@ -74,6 +77,7 @@ const Navbar = () => {
         <Button variant="outline" onClick={logoutHandler}>
           Log out
         </Button>
+        </div>
       </Box>
     </div>
   );
