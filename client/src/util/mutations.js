@@ -17,7 +17,7 @@ export const ADD_MESSAGE = gql`
         createMessage(userId: $userId, message: $message) {
             _id
             name
-            message
+            messages
         }
     }
     
@@ -35,12 +35,3 @@ export const LOGIN_USER = gql`
     }
     
 `
-
-// export const CREATE_CHAT = gql`
-//     mutation createChat($chatName: String, $users: users) {
-//         createChat(chatName: $chatName, users: $users) {
-//            chatName
-//            users
-//         }
-//     }
-// `
