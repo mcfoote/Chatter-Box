@@ -7,7 +7,7 @@ const typeDefs = gql`
         username: String
         email: String!
         password: String!
-        
+        messages: [String]
     }
     
     type Message {
@@ -15,15 +15,6 @@ const typeDefs = gql`
         message: String!
         date: String
     }
-
-    # type Chat {
-    #     _id: ID
-    #     chatName: String
-    #     isGroupChat: Boolean
-    #     users: [String]
-    #     latestMessage: String
-    #     groupAdmin: String
-    # }
 
     type Auth {
         token: ID!
@@ -33,16 +24,12 @@ const typeDefs = gql`
     type Query {
         user(userId: ID): User
         users: [User]!
-        message(messageId: ID!): Message
-        messages: [Message]!
-        # chat: [Chat]!
     }
 
     type Mutation {
         createUser(name: String!, username: String, email: String!, password: String!): Auth
         createMessage(userId: ID, message: String): User
         login(email: String!, password: String!): Auth
-        # creatChat(chatName: String!, users: String)
     }
 `;
 

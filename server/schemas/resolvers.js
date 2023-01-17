@@ -1,6 +1,6 @@
 const { signToken } = require('../util/auth');
 const { AuthenticationError } = require('apollo-server-express');
-const { User, Message, Chat } = require('../models');
+const { User } = require('../models');
 
 const resolvers = {
     //todo define resolvers
@@ -12,19 +12,7 @@ const resolvers = {
         // query all users in the database
         users: async () => {
             return User.find();
-        },
-        // query a specific/single message based on the userId and the messageId
-        message: async () => {
-            return Message.findOne({});
-        },
-        // query all messages from a user
-        messages: async () => {
-            return Message.find({});
-        },
-        // chat: async () => {
-        //     return Chat.find({});
-        // },
-        
+        }
     },
 
     Mutation: {
@@ -33,12 +21,17 @@ const resolvers = {
             const token = signToken(user)
             return { token, user };
         },
-        createMessage: async (parent, args, context) => {
-            if (context.user) {
-                const message = await Message.create(args);
-                return message;
-            }
-
+        createMessage: async (parent, { userId, message }) => {
+            return User.findOneAndUpdate(
+                { _id: userId },
+                {
+                    $addToSet: { messages: message },
+                },
+                {
+                    new: true,
+                    runValidators: true,
+                }
+            );
         },
         login: async (parent, { email, password }) => {
             const user = await User.findOne({ email });
@@ -56,11 +49,8 @@ const resolvers = {
             const token = signToken(user);
             return { token, user };
         },
-        // createChat: async (parent, { chatName, users }) => {
-        //     const chat = await Chat.create( chatName, users );
-        //     return chat;
-        // }
     }
+
 }
 
 module.exports = resolvers;
