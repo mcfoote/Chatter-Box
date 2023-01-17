@@ -23,7 +23,8 @@
     "build": "cd client && react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "heroku": "npm run build"
+    "heroku": "npm run build",
+    "install": "cd server && npm i && cd ../client && npm i"
   },
   "repository": {
     "type": "git",
