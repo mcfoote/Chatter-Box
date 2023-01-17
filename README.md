@@ -6,7 +6,7 @@
 A fullstack MERN based Real time chat app inspired by Messenger and Discord. Built using MongoDb and Mongoose with graphql for database, Express.js and Node.js for server functionality, Using react for the front-end. Users can register an account which will be authenticated upon login, allowing the user to message friends in chat threads. Deployed using Heroku Web Services.
 
 ## Messenger Page
-//link to live deployment
+link to live deployment: https://chatter-box-500.herokuapp.com/
 
 ## Contributors
 
