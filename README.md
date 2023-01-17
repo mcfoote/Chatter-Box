@@ -1,5 +1,5 @@
 # Chatter-Box 500
-![image]https://github.com/mcfoote/Chatter-Box/blob/main/assets/img/project3scrnshot.png
+![ScreenShot](./assets/img/project3scrnshot.png)
 
 ## Description
 
